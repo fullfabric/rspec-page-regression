@@ -5,7 +5,12 @@ module RSpec::PageRegression
   RSpec::Matchers.define :match_expectation do |expectation_path|
 
     match do |page|
-      @filepaths = FilePaths.new(RSpec.current_example, expectation_path)
+      @filepaths = if RSpec.current_example
+        FilePaths.new(RSpec.current_example, expectation_path)
+      else
+        Cucumber::FilePaths.new(scenario_data, expectation_path)
+      end
+
       Renderer.render(page, @filepaths.test_image)
       @comparison = ImageComparison.new(@filepaths)
       @comparison.result == :match

@@ -1,4 +1,5 @@
 require "rspec/page-regression/file_paths"
+require "rspec/page-regression/cucumber/file_paths"
 require "rspec/page-regression/image_comparison"
 require "rspec/page-regression/matcher"
 require "rspec/page-regression/renderer"
