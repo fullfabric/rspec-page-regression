@@ -18,6 +18,8 @@ module RSpec::PageRegression
         (_#{Regexp.escape(expected_path.to_s)})?
           $
       }xi
+
+      descriptions.push(File.basename(example.metadata[:file_path], '.rb'))
       canonical_path = descriptions.map{|s| s.parameterize('_')}.inject(Pathname.new(""), &:+)
 
       app_root = Pathname.new(example.metadata[:file_path]).realpath.each_filename.take_while{|c| c != "spec"}.inject(Pathname.new("/"), &:+)
