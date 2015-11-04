@@ -26,4 +26,20 @@ module RSpec::PageRegression
   def self.threshold
     @@threshold ||= 0.0
   end
+
+  def self.fuzz= (fuzz)
+    @@fuzz = fuzz
+  end
+
+  def self.fuzz
+    @@fuzz ||= 0.0
+  end
+
+  def self.shoot_full_page=(value)
+    @@shoot_full_page = value
+  end
+
+  def self.shoot_full_page
+    @@shoot_full_page ||= true
+  end
 end

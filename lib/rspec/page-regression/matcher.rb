@@ -1,16 +1,18 @@
 require 'which_works'
 
 module RSpec::PageRegression
-  RSpec::Matchers.define :match_expectation do |expectation_path|
+  RSpec::Matchers.define :match_expectation do |*expectation_path|
+    opts = expectation_path.extract_options!
+
     match do |page|
       @filepaths = if RSpec.current_example
-        FilePaths.new(RSpec.current_example, expectation_path)
+        FilePaths.new(RSpec.current_example, expectation_path.first)
       else
         Cucumber::FilePaths.new(scenario_data, expectation_path)
       end
 
       Renderer.render(page, @filepaths.test_image)
-      @comparison = ImagickComparison.new(@filepaths)
+      @comparison = ImagickComparison.new(@filepaths, RSpec.current_example.metadata[:responsive_layout], opts)
       @comparison.result == :match
     end
 
