@@ -1,9 +1,7 @@
 require 'which_works'
 
 module RSpec::PageRegression
-
   RSpec::Matchers.define :match_expectation do |expectation_path|
-
     match do |page|
       @filepaths = if RSpec.current_example
         FilePaths.new(RSpec.current_example, expectation_path)
@@ -12,7 +10,7 @@ module RSpec::PageRegression
       end
 
       Renderer.render(page, @filepaths.test_image)
-      @comparison = ImageComparison.new(@filepaths)
+      @comparison = ImagickComparison.new(@filepaths)
       @comparison.result == :match
     end
 
